@@ -10,7 +10,7 @@ const UMBRAL = 0.3; // parecido mínimo entre titulares para considerarlos la mi
 const AGENTE = 'PoliticIA-bot/1.0 (+https://juanmartinfisioterapia-code.github.io/politicia/criterios.html)';
 
 const medios = JSON.parse(await readFile(new URL('../medios.json', import.meta.url)));
-const parser = new Parser({ timeout: 20000, headers: { 'User-Agent': AGENTE } });
+const parser = new Parser();
 const carpetaPrueba = process.argv[2];
 
 const VACIAS = new Set(('el la los las un una unos unas de del al a en y o u que por para con sin sobre tras ante entre ' +
@@ -23,7 +23,7 @@ const POLITICA = ['gobierno', 'congreso', 'senado', 'diputad', 'senador', 'minis
   'tribunal', 'fiscal', 'amnistía', 'oposición', 'coalición', 'investidura', 'decreto', 'comunidad', 'autonómic', 'portavoz'];
 
 const limpiar = t => (t || '').replace(/\s+/g, ' ').trim();
-const palabras = t => new Set(t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+const palabras = t => new Set(t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   .replace(/[^a-z0-9ñ ]/g, ' ').split(' ').filter(p => p.length > 2 && !VACIAS.has(p)));
 const esPolitica = t => { const x = ' ' + t.toLowerCase() + ' '; return POLITICA.some(k => x.includes(k)); };
 const parecido = (a, b) => { let c = 0; for (const p of a) if (b.has(p)) c++; return c / (Math.min(a.size, b.size) || 1); };
@@ -34,17 +34,27 @@ async function leerMedio(m) {
     if (!archivos.includes(m.id + '.xml')) throw new Error('sin archivo de prueba');
     return parser.parseString(await readFile(carpetaPrueba + m.id + '.xml', 'utf8'));
   }
-  return parser.parseURL(m.rss);
+  return leerURL(m.rss);
+}
+
+// Descarga con corte duro a los 15 segundos, para que ningún medio deje colgado al robot.
+async function leerURL(url) {
+  const r = await fetch(url, { headers: { 'User-Agent': AGENTE }, signal: AbortSignal.timeout(15000) });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return parser.parseString(await r.text());
 }
 
 const limite = Date.now() - HORAS * 3600 * 1000;
 const noticias = [];
 const estado = [];
 
-for (const m of medios) {
-  if (m.retirado) { estado.push({ medio: m.nombre, ok: false, n: 0, error: 'retirado a petición del medio' }); continue; }
+// Todos los medios a la vez; luego se procesan en el orden de la lista.
+const resultados = await Promise.allSettled(medios.map(m => m.retirado ? Promise.reject(new Error('retirado a petición del medio')) : leerMedio(m)));
+
+for (const [k, m] of medios.entries()) {
   try {
-    const feed = await leerMedio(m);
+    if (resultados[k].status === 'rejected') throw resultados[k].reason;
+    const feed = resultados[k].value;
     let n = 0;
     for (const it of feed.items || []) {
       const titulo = limpiar(it.title);
@@ -59,7 +69,7 @@ for (const m of medios) {
   }
 }
 
-// Agrupar: cada noticia entra en el primer grupo al que se parezca lo suficiente.
+// Agrupar: cada noticia entra en el grupo al que más se parezca.
 noticias.sort((a, b) => b.fecha.localeCompare(a.fecha));
 const grupos = [];
 for (const n of noticias) {
@@ -77,7 +87,7 @@ for (const n of noticias) {
 let tendencias = [];
 if (!carpetaPrueba) {
   try {
-    const t = await parser.parseURL('https://trends.google.com/trending/rss?geo=ES');
+    const t = await leerURL('https://trends.google.com/trending/rss?geo=ES');
     tendencias = (t.items || []).map(i => limpiar(i.title)).filter(Boolean).slice(0, 20);
     estado.push({ medio: 'Google Trends', ok: true, n: tendencias.length });
   } catch (e) {
