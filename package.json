@@ -1,0 +1,7 @@
+{
+  "name": "politicia",
+  "private": true,
+  "type": "module",
+  "scripts": { "recoger": "node scripts/recoger.mjs" },
+  "dependencies": { "rss-parser": "^3.13.0" }
+}

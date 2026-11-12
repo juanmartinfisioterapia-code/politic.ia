@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qué medios salen y por qué · Politic.IA</title>
+<style>
+  :root { --bg:#f7f6f2; --card:#fff; --txt:#1d1d1b; --sec:#5f5e5a; --borde:#e2e0d8; --acento:#185fa5; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#151513; --card:#1f1f1c; --txt:#ecebe6; --sec:#b4b2a9; --borde:#33322e; --acento:#85b7eb; } }
+  body { margin:0; background:var(--bg); color:var(--txt); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:16px; }
+  a { color:var(--acento); }
+  h1 { font-family:Georgia,serif; font-size:26px; }
+  h2 { font-size:18px; margin-top:28px; }
+  ul { padding-left:20px; }
+  .ok { color:#3b6d11; } .ko { color:#a32d2d; }
+  @media (prefers-color-scheme: dark) { .ok { color:#97c459; } .ko { color:#f09595; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<p><a href="./">← Volver a la portada</a></p>
+<h1>Qué medios salen y por qué</h1>
+
+<p>Politic.IA no opina ni reescribe noticias. Muestra el titular que cada medio ha publicado sobre un mismo asunto, con el enlace a su web, para que puedas compararlos. Para leer la noticia completa siempre hay que ir al medio.</p>
+
+<h2>Reglas para salir en la portada</h2>
+<ul>
+  <li>Medio de información general de ámbito nacional, con sección de política propia.</li>
+  <li>Aviso legal con empresa editora y responsable identificados.</li>
+  <li>Publica noticias propias, no solo copias de otros medios.</li>
+  <li>Tiene un RSS público que se puede leer de forma automática y su robots.txt lo permite.</li>
+  <li>Cuando exista el registro oficial de medios de comunicación, estar inscrito en él.</li>
+</ul>
+<p>Las mismas reglas valen para todos. La línea editorial no cuenta para entrar ni para salir.</p>
+
+<h2>Qué mostramos de cada noticia</h2>
+<p>Solo el titular, el nombre del medio, la hora y el enlace. No copiamos el texto, la entradilla ni las fotos. Cada clic lleva al lector a la web del medio.</p>
+
+<h2>Cómo se agrupan las noticias</h2>
+<p>Un programa compara las palabras de los titulares de las últimas 48 horas y junta los que hablan de lo mismo. Es automático y a veces se equivoca, juntando dos noticias distintas o separando una misma. Arriba salen las que más medios han publicado y las que coinciden con lo más buscado en Google en España.</p>
+
+<h2>Medios incluidos</h2>
+<ul id="lista"><li>Cargando…</li></ul>
+
+<h2>Si eres un medio</h2>
+<p>Si no quieres aparecer en Politic.IA, escríbenos a <a href="mailto:CORREO@EJEMPLO.ES">CORREO@EJEMPLO.ES</a> desde una dirección de tu medio. Te retiramos en menos de 24 horas y en la portada dejaremos constancia de que has pedido no aparecer.</p>
+<p>Si un titular está mal atribuido o un enlace no funciona, avísanos en el mismo correo.</p>
+</div>
+<script>
+const esc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+Promise.all([fetch('medios.json').then(r => r.json()), fetch('data/noticias.json?t=' + Date.now()).then(r => r.json()).catch(() => ({}))])
+.then(([medios, datos]) => {
+  const est = {}; (datos.estado || []).forEach(e => est[e.medio] = e);
+  document.getElementById('lista').innerHTML = medios.map(m => {
+    const e = est[m.nombre];
+    const s = m.retirado ? '<span class="ko">ha pedido no aparecer</span>'
+      : !e ? '' : e.ok ? '<span class="ok">funcionando</span>' : '<span class="ko">no se puede leer ahora mismo</span>';
+    return `<li><a href="${esc(m.web)}" target="_blank" rel="noopener">${esc(m.nombre)}</a> · ${esc(m.tipo)} ${s ? '· ' + s : ''}</li>`;
+  }).join('');
+});
+</script>
+</body>
+</html>
