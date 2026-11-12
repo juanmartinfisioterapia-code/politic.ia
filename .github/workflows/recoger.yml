@@ -1,0 +1,28 @@
+name: Recoger noticias
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  recoger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: node scripts/recoger.mjs
+      - name: Guardar noticias
+        run: |
+          git config user.name "politicia-bot"
+          git config user.email "politicia-bot@users.noreply.github.com"
+          git add data/noticias.json
+          git diff --cached --quiet || git commit -m "Noticias actualizadas"
+          git push
