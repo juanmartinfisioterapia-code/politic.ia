@@ -1,24 +1,185 @@
 [
-  { "id": "elpais", "nombre": "El País", "tipo": "Prensa", "web": "https://elpais.com", "rss": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada" },
-  { "id": "elmundo", "nombre": "El Mundo", "tipo": "Prensa", "web": "https://www.elmundo.es", "rss": "https://e00-elmundo.uecdn.es/elmundo/rss/espana.xml" },
-  { "id": "abc", "nombre": "ABC", "tipo": "Prensa", "web": "https://www.abc.es", "rss": "https://www.abc.es/rss/2.0/espana/" },
-  { "id": "lavanguardia", "nombre": "La Vanguardia", "tipo": "Prensa", "web": "https://www.lavanguardia.com", "rss": "https://www.lavanguardia.com/rss/politica.xml" },
-  { "id": "elperiodico", "nombre": "El Periódico", "tipo": "Prensa", "web": "https://www.elperiodico.com", "rss": "https://www.elperiodico.com/es/rss/politica/rss.xml" },
-  { "id": "larazon", "nombre": "La Razón", "tipo": "Prensa", "web": "https://www.larazon.es", "rss": "https://www.larazon.es/rss/espana.xml" },
-  { "id": "eldiario", "nombre": "elDiario.es", "tipo": "Digital", "web": "https://www.eldiario.es", "rss": "https://www.eldiario.es/rss/politica/" },
-  { "id": "elconfidencial", "nombre": "El Confidencial", "tipo": "Digital", "web": "https://www.elconfidencial.com", "rss": "https://rss.elconfidencial.com/espana/" },
-  { "id": "elespanol", "nombre": "El Español", "tipo": "Digital", "web": "https://www.elespanol.com", "rss": "https://www.elespanol.com/rss/espana/" },
-  { "id": "publico", "nombre": "Público", "tipo": "Digital", "web": "https://www.publico.es", "rss": "https://www.publico.es/rss/politica" },
-  { "id": "infolibre", "nombre": "infoLibre", "tipo": "Digital", "web": "https://www.infolibre.es", "rss": "https://www.infolibre.es/rss/politica/" },
-  { "id": "theobjective", "nombre": "The Objective", "tipo": "Digital", "web": "https://theobjective.com", "rss": "https://theobjective.com/espana/feed/" },
-  { "id": "vozpopuli", "nombre": "Vozpópuli", "tipo": "Digital", "web": "https://www.vozpopuli.com", "rss": "https://www.vozpopuli.com/rss/espana/" },
-  { "id": "libertaddigital", "nombre": "Libertad Digital", "tipo": "Digital", "web": "https://www.libertaddigital.com", "rss": "https://feeds2.feedburner.com/libertaddigital/nacional" },
-  { "id": "okdiario", "nombre": "OKDiario", "tipo": "Digital", "web": "https://okdiario.com", "rss": "https://okdiario.com/espana/feed" },
-  { "id": "eldebate", "nombre": "El Debate", "tipo": "Digital", "web": "https://www.eldebate.com", "rss": "https://www.eldebate.com/rss/espana.xml" },
-  { "id": "20minutos", "nombre": "20minutos", "tipo": "Digital", "web": "https://www.20minutos.es", "rss": "https://www.20minutos.es/rss/nacional/" },
-  { "id": "rtve", "nombre": "RTVE", "tipo": "Radio y televisión", "web": "https://www.rtve.es", "rss": "https://api2.rtve.es/rss/temas_espana.xml" },
-  { "id": "ser", "nombre": "Cadena SER", "tipo": "Radio y televisión", "web": "https://cadenaser.com", "rss": "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml" },
-  { "id": "cope", "nombre": "COPE", "tipo": "Radio y televisión", "web": "https://www.cope.es", "rss": "https://www.cope.es/api/es/news/espana/rss.xml" },
-  { "id": "ondacero", "nombre": "Onda Cero", "tipo": "Radio y televisión", "web": "https://www.ondacero.es", "rss": "https://www.ondacero.es/rss/noticias/espana.xml" },
-  { "id": "europapress", "nombre": "Europa Press", "tipo": "Agencia", "web": "https://www.europapress.es", "rss": "https://www.europapress.es/rss/rss.aspx?ch=00066" }
+  {
+    "id": "elpais",
+    "nombre": "El País",
+    "tipo": "Prensa",
+    "web": "https://elpais.com",
+    "rss": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada"
+  },
+  {
+    "id": "elmundo",
+    "nombre": "El Mundo",
+    "tipo": "Prensa",
+    "web": "https://www.elmundo.es",
+    "rss": "https://e00-elmundo.uecdn.es/elmundo/rss/espana.xml"
+  },
+  {
+    "id": "abc",
+    "nombre": "ABC",
+    "tipo": "Prensa",
+    "web": "https://www.abc.es",
+    "rss": "https://www.abc.es/rss/2.0/espana/"
+  },
+  {
+    "id": "lavanguardia",
+    "nombre": "La Vanguardia",
+    "tipo": "Prensa",
+    "web": "https://www.lavanguardia.com",
+    "rss": "https://www.lavanguardia.com/rss/politica.xml"
+  },
+  {
+    "id": "elperiodico",
+    "nombre": "El Periódico",
+    "tipo": "Prensa",
+    "web": "https://www.elperiodico.com",
+    "rss": [
+      "https://www.elperiodico.com/es/rss/politica/rss.xml",
+      "https://www.elperiodico.com/es/rss/rss_portada.xml"
+    ]
+  },
+  {
+    "id": "larazon",
+    "nombre": "La Razón",
+    "tipo": "Prensa",
+    "web": "https://www.larazon.es",
+    "rss": [
+      "https://www.larazon.es/rss/espana.xml",
+      "https://www.larazon.es/arc/outboundfeeds/rss/category/espana/?outputType=xml",
+      "https://www.larazon.es/rss/portada.xml"
+    ]
+  },
+  {
+    "id": "eldiario",
+    "nombre": "elDiario.es",
+    "tipo": "Digital",
+    "web": "https://www.eldiario.es",
+    "rss": "https://www.eldiario.es/rss/politica/"
+  },
+  {
+    "id": "elconfidencial",
+    "nombre": "El Confidencial",
+    "tipo": "Digital",
+    "web": "https://www.elconfidencial.com",
+    "rss": "https://rss.elconfidencial.com/espana/"
+  },
+  {
+    "id": "elespanol",
+    "nombre": "El Español",
+    "tipo": "Digital",
+    "web": "https://www.elespanol.com",
+    "rss": "https://www.elespanol.com/rss/espana/"
+  },
+  {
+    "id": "publico",
+    "nombre": "Público",
+    "tipo": "Digital",
+    "web": "https://www.publico.es",
+    "rss": [
+      "https://www.publico.es/rss/politica",
+      "https://www.publico.es/rss/",
+      "https://www.publico.es/rss/espana"
+    ]
+  },
+  {
+    "id": "infolibre",
+    "nombre": "infoLibre",
+    "tipo": "Digital",
+    "web": "https://www.infolibre.es",
+    "rss": "https://www.infolibre.es/rss/politica/"
+  },
+  {
+    "id": "theobjective",
+    "nombre": "The Objective",
+    "tipo": "Digital",
+    "web": "https://theobjective.com",
+    "rss": "https://theobjective.com/espana/feed/"
+  },
+  {
+    "id": "vozpopuli",
+    "nombre": "Vozpópuli",
+    "tipo": "Digital",
+    "web": "https://www.vozpopuli.com",
+    "rss": [
+      "https://www.vozpopuli.com/rss/espana/",
+      "https://www.vozpopuli.com/espana/feed/",
+      "https://www.vozpopuli.com/feed/",
+      "https://www.vozpopuli.com/rss/"
+    ]
+  },
+  {
+    "id": "libertaddigital",
+    "nombre": "Libertad Digital",
+    "tipo": "Digital",
+    "web": "https://www.libertaddigital.com",
+    "rss": "https://feeds2.feedburner.com/libertaddigital/nacional"
+  },
+  {
+    "id": "okdiario",
+    "nombre": "OKDiario",
+    "tipo": "Digital",
+    "web": "https://okdiario.com",
+    "rss": "https://okdiario.com/espana/feed"
+  },
+  {
+    "id": "eldebate",
+    "nombre": "El Debate",
+    "tipo": "Digital",
+    "web": "https://www.eldebate.com",
+    "rss": "https://www.eldebate.com/rss/espana.xml"
+  },
+  {
+    "id": "20minutos",
+    "nombre": "20minutos",
+    "tipo": "Digital",
+    "web": "https://www.20minutos.es",
+    "rss": "https://www.20minutos.es/rss/nacional/"
+  },
+  {
+    "id": "rtve",
+    "nombre": "RTVE",
+    "tipo": "Radio y televisión",
+    "web": "https://www.rtve.es",
+    "rss": [
+      "https://api2.rtve.es/rss/temas_espana.xml",
+      "https://api2.rtve.es/rss/temas_noticias.xml",
+      "https://www.rtve.es/api/noticias.rss"
+    ]
+  },
+  {
+    "id": "ser",
+    "nombre": "Cadena SER",
+    "tipo": "Radio y televisión",
+    "web": "https://cadenaser.com",
+    "rss": "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml"
+  },
+  {
+    "id": "cope",
+    "nombre": "COPE",
+    "tipo": "Radio y televisión",
+    "web": "https://www.cope.es",
+    "rss": [
+      "https://www.cope.es/api/es/news/espana/rss.xml",
+      "https://www.cope.es/api/es/news/rss.xml",
+      "https://www.cope.es/rss/espana.xml",
+      "https://www.cope.es/rss"
+    ]
+  },
+  {
+    "id": "ondacero",
+    "nombre": "Onda Cero",
+    "tipo": "Radio y televisión",
+    "web": "https://www.ondacero.es",
+    "rss": [
+      "https://www.ondacero.es/rss/noticias/espana.xml",
+      "https://www.ondacero.es/rss/noticias.xml",
+      "https://www.ondacero.es/rss/"
+    ]
+  },
+  {
+    "id": "europapress",
+    "nombre": "Europa Press",
+    "tipo": "Agencia",
+    "web": "https://www.europapress.es",
+    "rss": "https://www.europapress.es/rss/rss.aspx?ch=00066"
+  }
 ]
