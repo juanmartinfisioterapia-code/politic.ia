@@ -4,28 +4,36 @@
     "nombre": "El País",
     "tipo": "Prensa",
     "web": "https://elpais.com",
-    "rss": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada"
+    "rss": "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/espana/portada",
+    "sigla": "EP",
+    "color": "#E2445C"
   },
   {
     "id": "elmundo",
     "nombre": "El Mundo",
     "tipo": "Prensa",
     "web": "https://www.elmundo.es",
-    "rss": "https://e00-elmundo.uecdn.es/elmundo/rss/espana.xml"
+    "rss": "https://e00-elmundo.uecdn.es/elmundo/rss/espana.xml",
+    "sigla": "EM",
+    "color": "#1E88E5"
   },
   {
     "id": "abc",
     "nombre": "ABC",
     "tipo": "Prensa",
     "web": "https://www.abc.es",
-    "rss": "https://www.abc.es/rss/2.0/espana/"
+    "rss": "https://www.abc.es/rss/2.0/espana/",
+    "sigla": "ABC",
+    "color": "#F28C28"
   },
   {
     "id": "lavanguardia",
     "nombre": "La Vanguardia",
     "tipo": "Prensa",
     "web": "https://www.lavanguardia.com",
-    "rss": "https://www.lavanguardia.com/rss/politica.xml"
+    "rss": "https://www.lavanguardia.com/rss/politica.xml",
+    "sigla": "LV",
+    "color": "#2BB673"
   },
   {
     "id": "elperiodico",
@@ -35,7 +43,9 @@
     "rss": [
       "https://www.elperiodico.com/es/rss/politica/rss.xml",
       "https://www.elperiodico.com/es/rss/rss_portada.xml"
-    ]
+    ],
+    "sigla": "EPc",
+    "color": "#8E44AD"
   },
   {
     "id": "larazon",
@@ -46,28 +56,36 @@
       "https://www.larazon.es/rss/espana.xml",
       "https://www.larazon.es/arc/outboundfeeds/rss/category/espana/?outputType=xml",
       "https://www.larazon.es/rss/portada.xml"
-    ]
+    ],
+    "sigla": "LR",
+    "color": "#00A3A3"
   },
   {
     "id": "eldiario",
     "nombre": "elDiario.es",
     "tipo": "Digital",
     "web": "https://www.eldiario.es",
-    "rss": "https://www.eldiario.es/rss/politica/"
+    "rss": "https://www.eldiario.es/rss/politica/",
+    "sigla": "eD",
+    "color": "#D81B60"
   },
   {
     "id": "elconfidencial",
     "nombre": "El Confidencial",
     "tipo": "Digital",
     "web": "https://www.elconfidencial.com",
-    "rss": "https://rss.elconfidencial.com/espana/"
+    "rss": "https://rss.elconfidencial.com/espana/",
+    "sigla": "EC",
+    "color": "#5D6D7E"
   },
   {
     "id": "elespanol",
     "nombre": "El Español",
     "tipo": "Digital",
     "web": "https://www.elespanol.com",
-    "rss": "https://www.elespanol.com/rss/espana/"
+    "rss": "https://www.elespanol.com/rss/espana/",
+    "sigla": "EE",
+    "color": "#C0392B"
   },
   {
     "id": "publico",
@@ -78,21 +96,27 @@
       "https://www.publico.es/rss/politica",
       "https://www.publico.es/rss/",
       "https://www.publico.es/rss/espana"
-    ]
+    ],
+    "sigla": "PÚ",
+    "color": "#3949AB"
   },
   {
     "id": "infolibre",
     "nombre": "infoLibre",
     "tipo": "Digital",
     "web": "https://www.infolibre.es",
-    "rss": "https://www.infolibre.es/rss/politica/"
+    "rss": "https://www.infolibre.es/rss/politica/",
+    "sigla": "iL",
+    "color": "#7CB342"
   },
   {
     "id": "theobjective",
     "nombre": "The Objective",
     "tipo": "Digital",
     "web": "https://theobjective.com",
-    "rss": "https://theobjective.com/espana/feed/"
+    "rss": "https://theobjective.com/espana/feed/",
+    "sigla": "TO",
+    "color": "#6D4C41"
   },
   {
     "id": "vozpopuli",
@@ -104,35 +128,45 @@
       "https://www.vozpopuli.com/espana/feed/",
       "https://www.vozpopuli.com/feed/",
       "https://www.vozpopuli.com/rss/"
-    ]
+    ],
+    "sigla": "VP",
+    "color": "#00897B"
   },
   {
     "id": "libertaddigital",
     "nombre": "Libertad Digital",
     "tipo": "Digital",
     "web": "https://www.libertaddigital.com",
-    "rss": "https://feeds2.feedburner.com/libertaddigital/nacional"
+    "rss": "https://feeds2.feedburner.com/libertaddigital/nacional",
+    "sigla": "LD",
+    "color": "#F4511E"
   },
   {
     "id": "okdiario",
     "nombre": "OKDiario",
     "tipo": "Digital",
     "web": "https://okdiario.com",
-    "rss": "https://okdiario.com/espana/feed"
+    "rss": "https://okdiario.com/espana/feed",
+    "sigla": "OK",
+    "color": "#5E35B1"
   },
   {
     "id": "eldebate",
     "nombre": "El Debate",
     "tipo": "Digital",
     "web": "https://www.eldebate.com",
-    "rss": "https://www.eldebate.com/rss/espana.xml"
+    "rss": "https://www.eldebate.com/rss/espana.xml",
+    "sigla": "ED",
+    "color": "#039BE5"
   },
   {
     "id": "20minutos",
     "nombre": "20minutos",
     "tipo": "Digital",
     "web": "https://www.20minutos.es",
-    "rss": "https://www.20minutos.es/rss/nacional/"
+    "rss": "https://www.20minutos.es/rss/nacional/",
+    "sigla": "20",
+    "color": "#43A047"
   },
   {
     "id": "rtve",
@@ -143,14 +177,18 @@
       "https://api2.rtve.es/rss/temas_espana.xml",
       "https://api2.rtve.es/rss/temas_noticias.xml",
       "https://www.rtve.es/api/noticias.rss"
-    ]
+    ],
+    "sigla": "TVE",
+    "color": "#8D6E63"
   },
   {
     "id": "ser",
     "nombre": "Cadena SER",
     "tipo": "Radio y televisión",
     "web": "https://cadenaser.com",
-    "rss": "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml"
+    "rss": "https://cadenaser.com/arc/outboundfeeds/rss/?outputType=xml",
+    "sigla": "SER",
+    "color": "#E53935"
   },
   {
     "id": "cope",
@@ -162,7 +200,9 @@
       "https://www.cope.es/api/es/news/rss.xml",
       "https://www.cope.es/rss/espana.xml",
       "https://www.cope.es/rss"
-    ]
+    ],
+    "sigla": "COPE",
+    "color": "#3F51B5"
   },
   {
     "id": "ondacero",
@@ -173,13 +213,17 @@
       "https://www.ondacero.es/rss/noticias/espana.xml",
       "https://www.ondacero.es/rss/noticias.xml",
       "https://www.ondacero.es/rss/"
-    ]
+    ],
+    "sigla": "OC",
+    "color": "#FB8C00"
   },
   {
     "id": "europapress",
     "nombre": "Europa Press",
     "tipo": "Agencia",
     "web": "https://www.europapress.es",
-    "rss": "https://www.europapress.es/rss/rss.aspx?ch=00066"
+    "rss": "https://www.europapress.es/rss/rss.aspx?ch=00066",
+    "sigla": "EPr",
+    "color": "#546E7A"
   }
 ]

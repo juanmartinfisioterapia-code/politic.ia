@@ -55,7 +55,7 @@
   .num { font-family:var(--titulos); font-weight:700; font-size:13px; background:var(--prisma); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .item { transition:border-color .15s ease, transform .15s ease; }
   .item:hover { transform:translateY(-1px); }
-  .insignia { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:6px; font-family:var(--titulos); font-size:9px; font-weight:700; color:#fff; margin-right:6px; letter-spacing:0; }
+  .insignia { display:inline-flex; align-items:center; justify-content:center; min-width:22px; height:22px; padding:0 5px; border-radius:6px; font-family:var(--titulos); font-size:9px; font-weight:700; color:#fff; margin-right:6px; letter-spacing:0; }
   .medio > span:first-child { display:inline-flex; align-items:center; }
   .buscar input { transition:border-color .15s ease, box-shadow .15s ease; }
   .buscar input:focus { outline:none; border-color:transparent; box-shadow:0 0 0 2px #fff, 0 0 0 4px #4DA3FF; }
@@ -98,7 +98,7 @@ let grupos = [];
 const COLORES = ['#E2445C','#F28C28','#2BB673','#1E88E5','#8E44AD','#00A3A3','#D81B60','#5D6D7E'];
 const colorDe = id => COLORES[[...id].reduce((a, c) => a + c.charCodeAt(0), 0) % COLORES.length];
 const siglas = n => (n || '').replace(/^(El|La|Los|Las)\s+/i, '').split(/[\s.]+/).filter(Boolean).slice(0, 2).map(p => p[0]).join('').toUpperCase();
-const insignia = id => `<b class="insignia" style="background:${colorDe(id)}">${esc(siglas(nombre[id] || id))}</b>`;
+const insignia = id => `<b class="insignia" style="background:${color[id] || colorDe(id)}">${esc(sigla[id] || siglas(nombre[id] || id))}</b>`;
 const GRANDES = ['elpais', 'elmundo', 'abc', 'lavanguardia']; // siempre primero, en este orden
 
 const coincide = (texto, f) => { const t = sinAcentos(texto); return f.split(/\s+/).filter(Boolean).every(p => t.includes(p)); };
@@ -154,12 +154,12 @@ function pintar(filtro = '') {
   });
 }
 
-let nombre = {};
+let nombre = {}, sigla = {}, color = {};
 Promise.all([
   fetch('data/noticias.json?t=' + Date.now()).then(r => r.json()),
   fetch('medios.json').then(r => r.json())
 ]).then(([datos, medios]) => {
-  medios.forEach(m => nombre[m.id] = m.nombre);
+  medios.forEach(m => { nombre[m.id] = m.nombre; sigla[m.id] = m.sigla; color[m.id] = m.color; });
   grupos = datos.grupos || [];
   const tend = datos.tendencias || [];
   if (tend.length) {
