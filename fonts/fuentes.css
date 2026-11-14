@@ -1,0 +1,7 @@
+/* Tipografías alojadas en la propia web (sin llamar a Google): Unbounded y Space Grotesk, licencia SIL Open Font License */
+@font-face { font-family:'Unbounded'; font-weight:500; font-style:normal; font-display:swap; src:url('unbounded-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family:'Unbounded'; font-weight:700; font-style:normal; font-display:swap; src:url('unbounded-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family:'Space Grotesk'; font-weight:400; font-style:normal; font-display:swap; src:url('space-grotesk-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family:'Space Grotesk'; font-weight:500; font-style:normal; font-display:swap; src:url('space-grotesk-latin-500-normal.woff2') format('woff2'); }
+:root { --titulos:'Unbounded', system-ui, sans-serif; --texto:'Space Grotesk', system-ui, sans-serif;
+  --prisma: linear-gradient(90deg,#FF4D6D,#FFB347,#3DDC97,#4DA3FF,#B04DFF); }
