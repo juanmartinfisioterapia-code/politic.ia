@@ -23,6 +23,6 @@ jobs:
         run: |
           git config user.name "politicia-bot"
           git config user.email "politicia-bot@users.noreply.github.com"
-          git add data/noticias.json
+          git add data/noticias.json data/archivo.json
           git diff --cached --quiet || git commit -m "Noticias actualizadas"
           git push
