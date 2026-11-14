@@ -146,5 +146,16 @@ const salida = {
 };
 
 await writeFile(new URL('../data/noticias.json', import.meta.url), JSON.stringify(salida));
+
+// Archivo de los últimos 30 días para el buscador: se añaden las nuevas y se borran las viejas.
+const DIAS_ARCHIVO = 30;
+const rutaArchivo = new URL('../data/archivo.json', import.meta.url);
+let archivo = [];
+try { archivo = JSON.parse(await readFile(rutaArchivo, 'utf8')); } catch {}
+const vistas = new Set(archivo.map(a => a.u));
+for (const n of noticias) if (!vistas.has(n.url)) archivo.push({ m: n.medio, t: n.titulo, u: n.url, f: n.fecha });
+const corte = new Date(Date.now() - DIAS_ARCHIVO * 86400000).toISOString();
+archivo = archivo.filter(a => a.f >= corte).sort((a, b) => b.f.localeCompare(a.f));
+if (!carpetaPrueba) await writeFile(rutaArchivo, JSON.stringify(archivo));
 console.log(`Medios OK: ${estado.filter(e => e.ok).length}/${medios.length} · noticias: ${noticias.length} · grupos: ${salida.grupos.length}`);
 for (const e of estado.filter(e => !e.ok)) console.log(`  Falla ${e.medio}: ${e.error}`);

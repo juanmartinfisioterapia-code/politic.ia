@@ -27,6 +27,8 @@
   .rejilla { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; }
   .item { display:block; border:1px solid var(--borde); border-radius:10px; padding:10px 12px; text-decoration:none; color:var(--txt); }
   .item:hover { border-color:var(--acento); }
+  .item.hueco { border-style:dashed; color:var(--muted); }
+  .item.hueco .tit { font-style:italic; }
   .item .medio { font-size:12px; color:var(--sec); display:flex; justify-content:space-between; }
   .item .tit { font-size:15px; margin-top:4px; }
   .acciones { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
@@ -72,18 +74,45 @@ const hace = iso => { const m = Math.round((Date.now() - new Date(iso)) / 60000)
 $('#fecha').textContent = new Date().toLocaleDateString('es-ES', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 
 let grupos = [];
+const GRANDES = ['elpais', 'elmundo', 'abc', 'lavanguardia']; // siempre primero, en este orden
+
+const coincide = (texto, f) => { const t = sinAcentos(texto); return f.split(/\s+/).filter(Boolean).every(p => t.includes(p)); };
+const DOMINIOS = ['elpais.com','elmundo.es','abc.es','lavanguardia.com','eldiario.es','elconfidencial.com','elespanol.com','larazon.es','publico.es','okdiario.com','libertaddigital.com','eldebate.com','europapress.es','rtve.es'];
+const enlaceGoogle = q => 'https://news.google.com/search?hl=es&gl=ES&ceid=ES:es&q=' + encodeURIComponent(q + ' (' + DOMINIOS.map(d => 'site:' + d).join(' OR ') + ')');
+let archivo = null;
+async function buscarArchivo(filtro) {
+  if (!archivo) { try { archivo = await fetch('data/archivo.json?t=' + Date.now()).then(r => r.json()); } catch { archivo = []; } }
+  const f = sinAcentos(filtro.trim());
+  if (sinAcentos($('#q').value.trim()) !== f) return; // el usuario ya ha escrito otra cosa
+  const res = archivo.filter(a => coincide(a.t, f)).slice(0, 80);
+  const google = `<p class="vacio"><a class="boton" href="${enlaceGoogle(filtro.trim())}" target="_blank" rel="noopener">Buscar "${esc(filtro.trim())}" en los periódicos con Google Noticias</a></p>`;
+  if (!res.length) { $('#lista').innerHTML = `<p class="vacio">No hay titulares sobre "${esc(filtro.trim())}" en los últimos 30 días.</p>` + google; return; }
+  $('#lista').innerHTML = `<article class="grupo"><p class="meta">${res.length} titulares de los últimos 30 días</p><div class="rejilla">` +
+    res.map(a => `<a class="item" href="${esc(urlSegura(a.u))}" target="_blank" rel="noopener">
+      <div class="medio"><span>${esc(nombre[a.m] || a.m)}</span><span>${new Date(a.f).toLocaleDateString('es-ES', { day:'numeric', month:'short' })}</span></div>
+      <div class="tit">${esc(a.t)}</div></a>`).join('') + `</div></article>` + google;
+}
 
 function pintar(filtro = '') {
   const f = sinAcentos(filtro.trim());
-  const visibles = grupos.filter(g => !f || g.items.some(i => sinAcentos(i.titulo).includes(f)));
-  if (!visibles.length) { $('#lista').innerHTML = `<p class="vacio">${grupos.length ? 'No hay noticias con esa palabra en las últimas 48 horas.' : 'Todavía no hay noticias. El robot las recoge cada hora.'}</p>`; return; }
+  const visibles = grupos.filter(g => !f || g.items.some(i => coincide(i.titulo, f)));
+  if (!visibles.length && f) { $('#lista').innerHTML = '<p class="vacio">Buscando en el archivo…</p>'; buscarArchivo(filtro); return; }
+  if (!visibles.length) { $('#lista').innerHTML = '<p class="vacio">Todavía no hay noticias. El robot las recoge cada hora.</p>'; return; }
   $('#lista').innerHTML = visibles.slice(0, 60).map((g, k) => {
     const base = g.items.find(i => i.medio === 'europapress') || g.items[0];
-    const items = g.items.map(i => `
+    const orden = i => { const k = GRANDES.indexOf(i.medio); return k < 0 ? 99 : k; };
+    const lista = [...g.items].sort((a, b) => orden(a) - orden(b));
+    const huecos = g.n >= 3 ? GRANDES.filter(id => !g.items.some(i => i.medio === id)) : [];
+    const vacios = huecos.map(id => `
+      <div class="item hueco">
+        <div class="medio"><span>${esc(nombre[id] || id)}</span></div>
+        <div class="tit">No hemos encontrado su titular sobre esto</div>
+      </div>`).join('');
+    const items = lista.map(i => `
       <a class="item" href="${esc(urlSegura(i.url))}" target="_blank" rel="noopener">
         <div class="medio"><span>${esc(nombre[i.medio] || i.medio)}</span><span>${hora(i.fecha)}</span></div>
         <div class="tit">${esc(i.titulo)}</div>
-      </a>`).join('');
+      </a>`).join('') + vacios;
     return `<article class="grupo ${k === 0 && !f ? 'principal' : ''}">
       ${g.tendencia ? `<span class="chip">Tendencia: ${esc(g.tendencia)}</span>` : ''}
       <p class="meta">${g.n > 1 ? `Cómo lo cuentan ${g.n} medios` : 'Solo lo cuenta un medio'}</p>
@@ -120,7 +149,8 @@ Promise.all([
     : 'Esperando la primera actualización del robot.';
 }).catch(() => { $('#lista').innerHTML = '<p class="vacio">No se han podido cargar las noticias. Prueba en un rato.</p>'; });
 
-$('#q').addEventListener('input', e => pintar(e.target.value));
+let espera;
+$('#q').addEventListener('input', e => { clearTimeout(espera); espera = setTimeout(() => pintar(e.target.value), 300); });
 </script>
 </body>
 </html>
